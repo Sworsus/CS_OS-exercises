@@ -1,0 +1,36 @@
+#define n, 6
+int v[n] = 1,2,3,4,5,6
+int i;
+int mayores=0;
+
+for(i=0;i<n;i++){
+  if(v[i]>0)
+    mayores++;
+}
+
+    .global start
+    .equ N, 6
+    .data
+V:  .word 1,2,3,4,5,6
+Ma: .word 0
+    .text
+start:
+    mov r4, #0
+L1: cmp r4, #N
+    bge L0
+    @el if
+    ldr r0, =V
+    ldr r0, [r0, r4, lsl #2]
+    cmp r0, #0
+    ble L2
+    @dentro del if
+    ldr r1, =Ma
+    ldr r1, [r1]
+    add r1, r1, #1
+    ldr r2, =Ma
+    str r1, [r2]
+
+L2: add r4, r4, #1
+    b L1
+L0: b .
+    .end

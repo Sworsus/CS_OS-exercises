@@ -1,0 +1,54 @@
+/*
+int a=5, b=15, mcd;
+while (a != b){
+  if(a>b)
+    a=a-b;
+  else
+    b=b-a;
+}
+mcd = a;
+*/
+
+    .global start
+    .data
+a:  .word 5
+b:  .word 15
+    .bss
+mcd:.space 4
+    .text
+    start
+l0: ldr r0, =a
+    ldr r0, [r0]
+    ldr r1, =b
+    ldr r1, [r1]
+    cmp r1, r2
+    beq l1
+
+    ldr r0, =a
+    ldr r0, [r0]
+    ldr r1, =b
+    ldr r1, [r1]
+    cmp r1, r2
+    ble l2
+    ldr r0, =a
+    ldr r1, [r0]
+    ldr r2, =b
+    ldr r2, [r2]
+    sub r1, r1, r2
+    str r1, [r0]
+    b l0
+
+l2: ldr r0, =b
+    ldr r1, [r0]
+    ldr r2, =a
+    ldr r2, [r2]
+    sub r1, r1, r2
+    str r1, [r0]
+    b l0
+    
+l1: ldr r0, =mcd
+    ldr r1, =a
+    ldr r1, [r1]
+    str r1, [r0]
+    b .
+    .end

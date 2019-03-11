@@ -1,0 +1,4 @@
+Salida <- GPIO17 -> Puerto 4 GB
+Entrada <- GPIO23 -> Puerto 1 GB
+
+conectar jumper sino no funcion LMAO

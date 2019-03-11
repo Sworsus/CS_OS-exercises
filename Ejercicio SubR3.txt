@@ -1,0 +1,43 @@
+a) La posicion de la primera linea de Cuenta: es , calculando de la siguente forma:
+   hay 11 lineas por ecncima, cada una con un comando que ocupa 4 bytes en memoria
+   por tanto, sera 0x0C000000 + HEX(11*4) = 0x0C000000 + 0x0000002C =
+   0x0C00002C
+
+b) Cuenta:  PROLOGO
+            mov r2, #0
+            mov r5, #0
+            mov r6, r0                 @he guaradado el valor de r0 en r6 ya que despues lo sustituyo y puedo necesitarlo
+            ldr r4, [r1]
+bucle:      cmp r2, r4
+            beq fin_bucle
+            ldr r0, [r6, r2, lsl #2]   @he tenido que cambiar r3 por r0 ya que no cumplia el estandar
+            bl Averigua
+            add r5, r5, r0
+            add r2, r2, #1
+            b bucle
+fin_bucle:  mov r0, r5
+            EPILOGO
+            mov pc, lr
+
+c) PROLOGO -> push{r4-r11,lr}
+   EPILOGO -> pop{r4-r11,lr}
+
+d) int Averigua(int V){
+      int a = V;
+      if(V<0){
+         a=0;
+      }
+      return a;
+   }
+
+Averigua:
+         push {r4-r11,lr}
+         mov r4, r0
+         cmp r4, #0
+         bge return
+
+         mov r4, #0
+
+return:  mov r0, r4
+         pop {r4-r11,lr}
+         bx lr

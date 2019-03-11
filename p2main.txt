@@ -1,0 +1,70 @@
+#define N 8
+int A[N]={7,3,25,4,75,2,1,1}; // cada valor en r7
+int sum = 0; //r8
+int max;  //r6
+int imax; //r5
+imax = 0;
+max = A[0];
+for (int i = 1; i < N; i++) {
+  sum += A[i];
+  if (A[i] > max) {
+    imax = i;
+    max = A[i];
+  }
+}
+
+
+.global start
+      .equ N, 8
+      .data
+A:    .word 7,3,25,4,6,2,30,3
+sum:  .word 0
+      .bss
+max:  .space 4
+imax: .space 4
+      .text
+start:
+      mov r5, #0      @imax=0
+      ldr r0, =imax
+      str r5, [r0]
+
+      ldr r0, =A      @max=A[0]
+      ldr r6, [r0]
+      ldr r1, =max
+      str r6, [r1]
+
+      ldr r0, =A      @sum=A[0]
+      ldr r8, [r0]
+      ldr r1, =sum
+      str r8, [r1]
+
+      mov r4, #1      @i=1
+L1:   cmp r4, #N
+      bge L0
+                      @sum+=A[i]
+      ldr r0, =A
+      ldr r7, [r0, r4, lsl #2]
+      ldr r1, =sum
+      ldr r8, [r1]
+      add r8, r8, r7
+      ldr r1, =sum
+      str r8, [r1]
+                      @if
+      ldr r0, =A
+      ldr r7, [r0, r4, lsl #2]
+      cmp r7, r6
+      ble L2
+                      @cuerpo del if
+      mov r5, r4
+      ldr r0, =imax
+      str r5, [r0]
+      ldr r0, =A
+      ldr r7, [r0, r4, lsl #2]
+      mov r6, r7
+      ldr r0, =max
+      str r6, [r0]
+
+L2:   add r4, r4, #1
+      b L1
+L0:   b .
+      .end

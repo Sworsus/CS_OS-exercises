@@ -1,0 +1,28 @@
+      .global start
+      .text
+X:    .word 0x03
+Y:    .word 0x0A
+Z:    .space 4
+
+start:
+      @if(x>y)
+      ldr r0, X
+      ldr r1, Y
+      cmp r0, r1
+      ble L0
+      @then z=x-y
+      ldr r0, X
+      ldr r1, Y
+      sub r0, r0, r1
+      str r0, Z
+      b L1
+
+      @else z=y-x
+L0:   ldr r0, X
+      ldr r1, Y
+      sub r1, r1, r0
+      str r1, Z
+
+
+L1:   B.
+      .end

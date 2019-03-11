@@ -1,0 +1,82 @@
+B[0]=(A[0]+A[1]+A[2])mod32
+B[i]=(A[3*i] + A[3*i+1] + A[3*i+2])mod32
+
+int mod_power_of_2 (int sum, int n{}
+   int 2^n=(1<<n);
+   return(sum &(2n-1))
+}
+
+sum_mod_32 (int *A //r5, int j //r6, int len //r7){
+   int i //r4, sum=0 //r8;
+   for (i=0; i<len; i++)
+      sum = sum + A[j+i];
+   sum=mod_power_of_2(sum,5);
+   return sum;
+}
+
+#define N 4
+int A[3*N]=
+int B[N]
+int i, j=0;
+void main(void){
+   for(i=0; i<N; i++)
+   B[i] = sum_mod_32(A, j, 3);
+   j=j+3
+}
+
+            .global start
+            .equ N, 4
+            .data
+A:          .word <3*N valores>
+j:          .word 0
+            .bss
+B:          .space 4*n
+            .text
+start:
+            mov r4, #0
+L0:         cmp r4, #N
+            bge L1
+
+            ldr r0, =A
+            ldr r1, =j
+            ldr r1, [r1]
+            mov r2, #3s
+            bl sum_mod_32
+            ldr r1, =B
+            str r0, [r1, r4, lsl #2]
+
+            ldr r0, =j
+            ldr r1, [r0]
+            add r1, r1, #3
+            str r1, [r0]
+
+            add r4, r4, #2
+            b L0
+L1:         b .
+
+sum_mod_32:
+            push {r4-r9,lr}
+            mov r5, r0
+            mov r6, r1
+            mov r7, r2
+            mov r8, #0
+
+            mov r4, #0
+L2:         cmp r4, r7
+            bgo L3
+
+            add r0, r4, r6
+            ldr r0,[r5, r0, lsl #2]
+            add r8, r8, r0
+
+            add r4, r4, #1
+            b L2
+
+L3:         mov r0, r8
+            mov r1, #5
+            bl mod_power_of_2
+
+            mov r8, r0
+            mov r0, r8
+            pop{r4-r9,lr}
+            bx lr

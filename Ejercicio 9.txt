@@ -1,0 +1,27 @@
+#define n, 10
+int v[n] = 1,2,3,4,5,6,7,8,9,10
+int i;
+
+for(i=0;i<n;i++){
+  v[i]=v[i]+1;
+}
+
+    .global start
+    .equ N, 10
+    .data
+V:  .word 1,2,3,4,5,6,7,8,9,10
+    .text
+start:
+    mov r4, #0
+L1: cmp r4, #N
+    bge L0
+    @cuerpo del for
+    ldr r0, =V
+    ldr r1, [r0, r4, lsl #2]
+    add r1, r1, #1
+    str r1, [r0, r4, lsl #2]
+
+    add r4, r4, #1
+    b L1
+L0: b .
+    .end

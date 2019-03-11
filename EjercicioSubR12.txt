@@ -1,0 +1,37 @@
+/* Escriba un programa en lenguaje de alto nivel que calcule el factorial de un numero n
+usando recursividad, sabiendo que fact(n) = n * fact(n - 1). Traduzca el programa al lenguaje
+ensamblador del ARM */
+
+/vamos a meter n en la pila(memoria)
+
+int fact(int n//sp){
+   int f;
+   if(n<=0)
+      f=1;
+   else
+      f=n*fact(n-1);
+   return f;
+}
+
+
+fact:
+         push{lr}
+         sub sp, sp, #8    @al restar 8 a la pila reservamos espacio para 2 palabras, f y n.
+         str r0, [sp]
+
+         cmp r0, #0
+         bgt L0
+         mov r0, #1
+         str r0, [sp, #4]
+         b L1
+
+L0:      ldr r0, [sp]
+         sub r0, r0, #1
+         bl fact
+         ldr r1, [sp]
+         mul r0, r0, r1
+         str r0, [sp, #4]
+
+L1:      add sp, sp, #8
+         pop{lr}
+         mov pc, lr

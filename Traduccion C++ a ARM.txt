@@ -1,0 +1,31 @@
+Traducir de C++ a Ensamblador:
+
+C++
+
+int x=5;
+int y=7;
+if (x >= y){
+  x = x+2;
+  y = y+2;
+} else {
+  x = x-2;
+  y = y-2;
+}
+--------------------------------
+En ensamblador (ARM)
+
+                      MEMORIA
+0x000000              05000000         -> tiene guardado el dato 5.
+0x000004              07000000
+0x000008              ldr r1,[pc,#-16] -> cargamos 8 bytes mas arriba (ponemos -16 debido a que el pc esta incrementado en +8)
+0x00000C              ldr r2,[pc,#-16]
+0x000010              cmp r1,r2        -> hace la comparativa (ve si al restar da <0 para comparar  x>=y)
+0x000014              blt 2            -> 
+0x000018              add r1,r1,#2
+0x00001C              add r2,r2,#2
+0x000020              b 1
+0x000024              sub r1,r1,#2
+0x000028              sub r1,r1,#2
+0x00002C              b -2
+Eclipse cdt c++
+plugin gnu arm  

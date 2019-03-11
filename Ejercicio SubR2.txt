@@ -1,0 +1,67 @@
+Traducimos a Ensamblador:
+
+      .global start
+      .equ N, <Tamaño>
+      .data
+A:    .word <Valores>
+      .bss
+noeliano: .space 4
+      .text
+start:
+      mov r4, #0
+      mov r7, #1
+
+      ldr r0, =A
+      bl Sum45
+      mov r6, r0
+
+L3:   sub r8, #N, #1             @(i < N-1)
+      cmp r4, r8
+      bge L0
+
+      add r5, r4, #1             @j = i+1;
+
+      ldr r0, =A                 @if(A[i]>A[j])
+      ldr r0, [r0, r4, lsl #2]
+      ldr r1, =A
+      ldr r1, [r1, r5, lsl #2]
+      cmp r0, r1
+      bgt L1
+      add r4, r4, #1
+      b L3
+
+L0:   cmp r7, #1
+      bne L1
+      cmp r6, #1
+      bne L1
+      ldr r0, =noeliano
+      str r0, #1
+      b L4
+
+L1:   ldr r0, =noeliano
+      str r0, #0
+L4:   b .
+
+Sum45:
+      push {r4-r11,lr}
+      mov r5, r0                @=A
+      mov r4, #0
+
+      ldr r7, [r5]              @suma = A[0]
+      mov r6, #0
+
+L7:   cmp r4, #N
+      bge L5
+
+      ldr r0, [r5, r4, lsl #2]
+      add r7, r7, r0            @suma+=A[i]
+      add r4, r4, #1
+      b L7
+
+L5:   cmp r7, #45
+      bne L6
+      mov r6, #1
+
+L6:   mov r0, r6
+      pop {r4-r11,lr}
+      bx lr

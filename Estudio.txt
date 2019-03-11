@@ -1,0 +1,61 @@
+En C:
+
+int sumaVector(int* V, int N){
+  int i;
+  int sum=0;
+  for(i=0; i<N; i++)
+    sum += A[i];
+  return sum;
+}
+
+#define N, 16
+int V[N];
+int suma; //r4
+int melchor=0;  //memoria
+int i=0; //r5
+
+suma = sumaVector(V,N);
+
+while(!melchor || i<n){
+  if(suma != 2*V[N])
+    melchor=1;
+  i++;
+}
+
+
+Traducimos a Ensamblador:
+
+      .global start
+      .equ N, 16
+      .data
+V:    .word <valores>
+      .bss
+melchor:  .space 4
+      .text
+start:
+      mov r0, #0
+      ldr r1, =melchor
+      str r0, [r1]
+      ldr r0, =V    @(37-40) suma = sumaVector
+      mov r1, #N
+      bl sumaVector
+      mov r4, r0
+      mov r5, #0    @i=0
+L0:   ldr r0, =melchor
+      ldr r0, [r0]
+      cmp r0, #0
+      bne L1
+      cmp r5, #N
+      bge L1
+      ldr r0, =V
+      ldr r0, [r0, r5, lsl #2]
+      mov r0, r0, lsl #1
+      cmp r4, r0
+      bne L2
+      mov r0, #1
+      ldr r1, =melchor
+      str r0, [r1]
+L2:   add r5, r5, #1
+      b L0
+L1:   b .
+      .end

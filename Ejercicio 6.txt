@@ -1,0 +1,26 @@
+/*
+#dedine n #16
+f=1
+for(i=2; i<=n; i++){
+  f=f+f;
+}
+i es auxiliar, la guardamos en registro
+*/
+
+    .global start
+    .equ n, #16
+    .data
+f:  .ward 1
+    .text
+start
+    mov r4, #2  @i=2
+l0: cmp r4, #n  @comparacion i con n
+    bgt l1  @el salto del bucle
+    ldr r0, =f
+    ldr r1, [r0]
+    add r1, r1, r1
+    str r1, [r0]  @19-22 hago la operacion dentro del bucle
+    add r4, r4, #1 @i++
+    b l0
+l1: b.
+    .end

@@ -1,0 +1,29 @@
+/*
+Ejercicios 9 y 10 proximo Martes
+
+a=81
+b=18 (ambas variable en memoria)
+do{
+  a=a-b
+}while(a>0)
+*/
+
+
+    .global start
+    .data
+a:  .ward 81
+b:  .ward 18
+    .text
+  start
+    ldr r0, =a
+    ldr r1, [r0]  @llevarme a r1 el valor de a
+    ldr r2, =b
+    ldr r2, [r2]  @llevarme a r2 el valor de b
+    sub r1, r1, r2  @hago la resta
+    str r1, [r0]  @cargo el nuevo valor de la resta
+    ldr r0, =a  @guardo el valor de la resta
+    ldr r0, [r0]
+    cmp r0, #0  @compara el valor en r0 (a) con 0
+    bgt l0
+    b.
+    .end

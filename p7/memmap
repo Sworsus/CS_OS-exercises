@@ -1,0 +1,24 @@
+
+MEMORY
+{
+    ram : ORIGIN = 0x8000, LENGTH = 0x10000
+}
+
+SECTIONS
+{
+    .text : { *init.o(.text)
+    		*(.text) 
+    		} > ram
+ 	.data : { *(.data) } > ram
+    .bss : { *(.bss) } > ram
+    PROVIDE( end = . );
+}
+
+GROUP(
+   libgcc.a
+   libg.a
+   libc.a
+   libm.a
+   libnosys.a
+ )
+

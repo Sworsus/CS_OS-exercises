@@ -1,0 +1,79 @@
+int chebishev(int x1//r4, int y1//r5, int x2//r6, int y2//r7)
+{
+  int d1//r8, d2//r9;
+  d1=abs(x1-x2); //a esta llamada solo se le pasa 1 valor, primero se hace la resta ya que esto solo me hace el absoluto
+  d2=abs(y1-y2);
+  if(d2>d1)
+    d1=d2;
+  return d1;
+}
+
+#define N
+int px, py;
+int V[2N];
+int D[N];
+
+void main(void){
+
+  int i;
+  for(i=0; i<N;i++)
+    D[i]=chebishev(px,py,V[2*i],D[2*i+1]);
+}
+
+         .global start
+         .equ N, 4
+         .data
+V:       .word 4,7,23,15,30,8,12,2
+Px:      .word 3
+Py:      .word 5
+         .bss
+D:       .space 4*N
+         .text
+
+start:
+         mov r4, #0
+L2:      cmp r4, #N
+         bge L1
+                              @V[2*i]
+         ldr r0, =V
+         ldr r2, [r0, r4, lsl #3]
+                              @D[2*i+1]
+         add r0, r0, #4       @r0=V+4
+         ldr r3, [r0, r4, lsl #3]
+
+         ldr r0, =Px
+         ldr r0, [r0]
+
+         ldr r1, =Py
+         ldr r1, [r1]
+
+         bl chebishev
+         ldr r1, =D
+         str r0, [r1, r4, lsl #2]
+
+         add r4, r4, #1
+L1:      b .
+
+chebishev:
+         push {r4-r9,lr}
+         mov r4, r0
+         mov r5, r1
+         mov r6, r2
+         mov r7, r3
+                              @d1=abs(x1-x2)
+         sub r0, r4, r6
+         bl abs
+         mov r8, r0
+                                @d2=abs(y1-y2)
+         sub r0, r5, r7
+         bl abs
+         mov r9, r0
+                                @if
+         cmp r8, r9
+         ble L0
+                                @cuerpo if
+         mov r0, r8
+L0:      pop{r4-r9,lr}
+         bx lr
+
+         .end

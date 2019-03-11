@@ -1,0 +1,118 @@
+
+Allocating common symbols
+Common symbol       size              file
+
+led1                0x4               ./P5.o
+led2_mode           0x4               ./P5.o
+led2                0x4               ./P5.o
+
+Discarded input sections
+
+ .group         0x00000000        0x8 ./P5.o
+ .group         0x00000000        0x8 ./P5.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x00008000         0x00001000
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./P5.o
+LOAD ./init.o
+START GROUP
+LOAD c:/armtools/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1\libgcc.a
+LOAD c:/armtools/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib\libg.a
+LOAD c:/armtools/5.4 2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib\libc.a
+END GROUP
+
+.text           0x00008000       0xc4
+ *(.text*)
+ .text          0x00008000        0x0 ./P5.o
+ .text.setup_gpio
+                0x00008000       0x18 ./P5.o
+                0x00008000                setup_gpio
+ .text.main     0x00008018       0x10 ./P5.o
+                0x00008018                main
+ .text          0x00008028       0x9c ./init.o
+                0x00008028                _start
+                0x000080ac                enable_irq
+
+.data           0x000080c4        0x0
+ .data          0x000080c4        0x0 ./P5.o
+ .data          0x000080c4        0x0 ./init.o
+
+.igot.plt       0x000080c4        0x0
+ .igot.plt      0x000080c4        0x0 ./P5.o
+
+.glue_7         0x000080c4        0x0
+ .glue_7        0x000080c4        0x0 linker stubs
+
+.glue_7t        0x000080c4        0x0
+ .glue_7t       0x000080c4        0x0 linker stubs
+
+.vfp11_veneer   0x000080c4        0x0
+ .vfp11_veneer  0x000080c4        0x0 linker stubs
+
+.v4_bx          0x000080c4        0x0
+ .v4_bx         0x000080c4        0x0 linker stubs
+
+.iplt           0x000080c4        0x0
+ .iplt          0x000080c4        0x0 ./P5.o
+
+.rel.dyn        0x000080c4        0x0
+ .rel.iplt      0x000080c4        0x0 ./P5.o
+
+.bss            0x000080c4        0xc
+ *(.bss*)
+ .bss           0x000080c4        0x0 ./P5.o
+ .bss           0x000080c4        0x0 ./init.o
+ COMMON         0x000080c4        0xc ./P5.o
+                0x000080c4                led1
+                0x000080c8                led2_mode
+                0x000080cc                led2
+OUTPUT(lol1.elf elf32-littlearm)
+
+.debug_info     0x00000000       0xee
+ .debug_info    0x00000000       0x8a ./P5.o
+ .debug_info    0x0000008a       0x64 ./init.o
+
+.debug_abbrev   0x00000000       0x77
+ .debug_abbrev  0x00000000       0x63 ./P5.o
+ .debug_abbrev  0x00000063       0x14 ./init.o
+
+.debug_aranges  0x00000000       0x48
+ .debug_aranges
+                0x00000000       0x28 ./P5.o
+ .debug_aranges
+                0x00000028       0x20 ./init.o
+
+.debug_ranges   0x00000000       0x18
+ .debug_ranges  0x00000000       0x18 ./P5.o
+
+.debug_macro    0x00000000      0xad4
+ .debug_macro   0x00000000       0x1a ./P5.o
+ .debug_macro   0x0000001a      0x84a ./P5.o
+ .debug_macro   0x00000864      0x270 ./P5.o
+
+.debug_line     0x00000000       0xb9
+ .debug_line    0x00000000       0x5f ./P5.o
+ .debug_line    0x0000005f       0x5a ./init.o
+
+.debug_str      0x00000000     0x31b0
+ .debug_str     0x00000000     0x31b0 ./P5.o
+
+.comment        0x00000000       0x6e
+ .comment       0x00000000       0x6e ./P5.o
+                                 0x6f (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x34
+ .ARM.attributes
+                0x00000000       0x36 ./P5.o
+ .ARM.attributes
+                0x00000036       0x26 ./init.o
+
+.debug_frame    0x00000000       0x4c
+ .debug_frame   0x00000000       0x4c ./P5.o
