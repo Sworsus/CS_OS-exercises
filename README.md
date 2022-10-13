@@ -1,4 +1,4 @@
-# ensamblador
+# Computer System and Operating Systems exercises
 
 All the exercises and practices that I worked on while studying the "Computer System and Operating Systems" subject during my degree.
 
